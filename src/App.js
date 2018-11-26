@@ -3,6 +3,7 @@ import './App.css';
 import Navigation from './components/Navigation/Navigation'
 import Logo from './components/Logo/Logo'
 import Login from './components/Login/Login'
+import Register from './components/Register/Register'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Particles from 'react-particles-js';
@@ -77,9 +78,9 @@ class App extends Component {
         <Particles params={particlesOptions} className='particles'/>
         <Navigation onRouteChange={this.onRouteChange} />
         {
-          this.state.route === 'login' 
-          ? <Login onRouteChange={this.onRouteChange}/> 
-          : <div>
+          this.state.route === 'home' 
+          ? 
+          <div>
             <Logo />
             <ImageLinkForm 
               onInputChange={this.onInputChange} 
@@ -87,6 +88,14 @@ class App extends Component {
             />
             <FaceRecognition box={this.state.box} imageURL={this.state.imageURL}/>
           </div>
+          : 
+          (
+            this.state.route === 'login' 
+            ?
+            <Login onRouteChange={this.onRouteChange}/>
+            :
+            <Register onRouteChange={this.onRouteChange}/>
+          )
         }
       </div>
     );
