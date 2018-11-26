@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import Navigation from './components/Navigation/Navigation'
+import Clarifai from 'clarifai';
 import Logo from './components/Logo/Logo'
+import Particles from 'react-particles-js';
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
+import Navigation from './components/Navigation/Navigation'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
-import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
 import 'tachyons';
 
 const app = new Clarifai.App({
@@ -33,7 +33,8 @@ class App extends Component {
       input: '',
       imageURL: '',
       box: {},
-      route: 'login'
+      route: 'login',
+      isLoggedIn: false
     }
   }
 
@@ -69,6 +70,11 @@ class App extends Component {
   }
 
   onRouteChange = (route) => {
+    if (route === 'logout') {
+      this.setState({isLoggedIn: false})
+    } else if (route === 'home') {
+      this.setState({isLoggedIn: true})
+    }
     this.setState({route: route})
   }
 
@@ -76,7 +82,7 @@ class App extends Component {
     return (
       <div className="App">
         <Particles params={particlesOptions} className='particles'/>
-        <Navigation onRouteChange={this.onRouteChange} />
+        <Navigation isLoggedIn={this.state.isLoggedIn} onRouteChange={this.onRouteChange} />
         {
           this.state.route === 'home' 
           ? 
