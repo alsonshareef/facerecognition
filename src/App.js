@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Navigation from './components/Navigation/Navigation'
 import Logo from './components/Logo/Logo'
+import Login from './components/Login/Login'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Particles from 'react-particles-js';
@@ -30,7 +31,8 @@ class App extends Component {
     this.state = {
       input: '',
       imageURL: '',
-      box: {}
+      box: {},
+      route: 'login'
     }
   }
 
@@ -65,17 +67,27 @@ class App extends Component {
       .catch(err => console.log(err))
   }
 
+  onRouteChange = (route) => {
+    this.setState({route: route})
+  }
+
   render() {
     return (
       <div className="App">
         <Particles params={particlesOptions} className='particles'/>
-        <Navigation />
-        <Logo />
-        <ImageLinkForm 
-          onInputChange={this.onInputChange} 
-          onButtonSubmit={this.onButtonSubmit}
-        />
-        <FaceRecognition box={this.state.box} imageURL={this.state.imageURL}/>
+        <Navigation onRouteChange={this.onRouteChange} />
+        {
+          this.state.route === 'login' 
+          ? <Login onRouteChange={this.onRouteChange}/> 
+          : <div>
+            <Logo />
+            <ImageLinkForm 
+              onInputChange={this.onInputChange} 
+              onButtonSubmit={this.onButtonSubmit}
+            />
+            <FaceRecognition box={this.state.box} imageURL={this.state.imageURL}/>
+          </div>
+        }
       </div>
     );
   }
